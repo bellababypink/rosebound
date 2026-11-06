@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: rosebound
+    runtime: python
+    plan: starter
+    numInstances: 1
+    buildCommand: pip install -r requirements.txt
+    startCommand: python wsgi.py
+    healthCheckPath: /api/health
+    autoDeployTrigger: off
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.14
+      - key: ROSEBOUND_DATA
+        value: /var/data/rosebound
+      - key: ROSEBOUND_SECURE_COOKIE
+        value: "1"
+    disk:
+      name: rosebound-data
+      mountPath: /var/data
+      sizeGB: 1
